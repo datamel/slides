@@ -6,8 +6,10 @@ branches: master # Set the branch to build from
 
 install:
     - pip install mkdocs # Install the required dependencies
+    - gem install mdl #markdownlint (Ruby is already available on Travis-CI)
 
-script: true # Skip script (Don't use this if one already exists)
+script:
+    - mdl docs/
 
 before_deploy:
     - mkdocs build --verbose --clean --strict # Build a local version of the docs
