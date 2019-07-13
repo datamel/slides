@@ -2,7 +2,10 @@ language: python # Set the build language to Python
 
 python: 3.6 # Set the version of Python to use
 
-branches: master # Set the branch to build from
+branches:
+  only:
+  - gh-pages
+  - /.*/
 
 install:
     - pip install mkdocs # Install the required dependencies
