@@ -10,7 +10,7 @@ Is the application covered by a comprehensive suite of tests that run automatica
 
 ### Advantage of automated tests
 
-I can make changes to the application code with confidence that tests will quickly catch if I break the existing behaviour.
+Make code changes with confidence that tests will quickly spot if I break the existing behaviour.
 
 I've been running unit tests locally and during a CI build for my Python.
 
@@ -67,7 +67,7 @@ def two_fer(name=""):
 Now that test passed (and the [Rule of Three](https://en.wikipedia.org/wiki/Rule_of_three_(computer_programming)) applied), I refactored.
 
 ```python
-def two_fer(name="you"): 
+def two_fer(name="you"):
     return (f"One for {name}, one for me.")
 ```
 
@@ -103,7 +103,7 @@ Can I add features or switch a component out, without having to alter the origin
 
 Is the code in a shared **source control** repository like *git*?
 
-Is a central server checking that it still **builds** and 
+Is a central server checking that it still **builds** and
 les CI build from my code:
 
 ![VSCodeTests](build_pass.png)
