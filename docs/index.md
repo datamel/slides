@@ -1,12 +1,61 @@
-# How I would Identify Good Software Engineering
+# Good Software Engineering
 
 [![Build Status](https://travis-ci.com/datamel/slides.svg?branch=master)](https://travis-ci.com/datamel/slides)
+
+## Continuous Integration
+
+> The practice of integrating changes from different developers in the team...several times a day.
+
+Is the code in a shared **source control** repository like *git*?
+
+Is a central server checking that it still **builds** and
+les CI build from my code:
+
+![VSCodeTests](build_pass-resized.png)
+
+My CI + deployment pipeline for these slides!
+
+```yaml
+language: python # Set the build language to Python
+
+python: 3.6 # Set the version of Python to use
+
+branches:
+  only:
+  - gh-pages
+  - /.*/ # Watch all branches pushed to github
+
+# Pulling in mdcheckr
+before_install:
+  - sudo add-apt-repository -y ppa:mike42/mdcheckr
+  - sudo apt-get update
+  - sudo apt-get -y install mdcheckr
+
+install:
+    - pip install mkdocs # Install the required dependencies
+    - gem install mdl # Install markdown linter
+
+script:
+    - mdl docs/ # Run markdown linter against docs/ folder
+    - mdcheckr docs/*.md # Check for broken images, link and code blocks
+
+before_deploy:
+    - mkdocs build --verbose --clean --strict # Build a local version of slides
+
+deploy: # Deploy built mkdocs files to Github on the gh_pages branch (from master)
+    provider: pages
+    skip_cleanup: true
+    github_token: $github_token
+    local_dir: site
+    on:
+        branch: master
+```
 
 ## Automated Tests
 
 Is the application covered by a comprehensive suite of tests that run automatically?
 
-![Testing Pyramid](pyramid.png)
+![Testing Pyramid](pyramidresized.png)
 
 ### Advantage of automated tests
 
@@ -14,7 +63,7 @@ Make code changes with confidence that tests will quickly spot if I break the ex
 
 I've been running unit tests locally and during a CI build for my Python.
 
-![VSCodeTests](vscodetestrunner.png)
+![VSCodeTests](vscodetestrunner-resized.png)
 
 (Not typical testing) I have a CI build at travis-ci.com for these very slides that:
 
@@ -79,69 +128,16 @@ def two_fer(name="you"):
 - And if you like numbers, an easy metric for code quality from **coverage %**.
 - TDD will naturally produce minimal modular code (Single Responsiblity Principle and **Y**ou **A**ren't **G**onna **T**o **N**eed **I**t)
 
-## Clean Code - SOLID
+## Things I wish I could fit in
 
-5 important object-orientated design principles:
-
-- **Single-responsiblity principle**
-- **Open-closed principle**
-- Liskov substitution principle
-- Interface segregation principle
-- Dependency Inversion Principle
-
-I'm starting to appreciate the ones in bold.
-
-### Identifying the open-close principle in software
-
-Open for extension but closed for modification.
-
-Can I add features or switch a component out, without having to alter the original code (which might then have knock-on effects to other components)?
-
-## Continuous Integration
-
-> The practice of integrating changes from different developers in the team...several times a day.
-
-Is the code in a shared **source control** repository like *git*?
-
-Is a central server checking that it still **builds** and
-les CI build from my code:
-
-![VSCodeTests](build_pass.png)
-
-My CI + deployment pipeline for these slides!
-
-```yaml
-language: python # Set the build language to Python
-
-python: 3.6 # Set the version of Python to use
-
-branches:
-  only:
-  - gh-pages
-  - /.*/ # Watch all branches pushed to github
-
-# Pulling in mdcheckr
-before_install:
-  - sudo add-apt-repository -y ppa:mike42/mdcheckr
-  - sudo apt-get update
-  - sudo apt-get -y install mdcheckr
-
-install:
-    - pip install mkdocs # Install the required dependencies
-    - gem install mdl # Install markdown linter
-
-script:
-    - mdl docs/ # Run markdown linter against docs/ folder
-    - mdcheckr docs/*.md # Check for broken images, link and code blocks
-
-before_deploy:
-    - mkdocs build --verbose --clean --strict # Build a local version of slides
-
-deploy: # Deploy built mkdocs files to Github on the gh_pages branch (from master)
-    provider: pages
-    skip_cleanup: true
-    github_token: $github_token
-    local_dir: site
-    on:
-        branch: master
-```
+- SOLID  object-orientated design principles
+  - Single-responsiblity principle
+  - Open-closed principle
+  - Liskov substitution principle
+  - Interface segregation principle
+  - Dependency Inversion Principle
+- Loosely coupled
+- High cohesion
+- Design patterns e.g. singleton and repository
+- Agile development, Kanban boards, SCRUM etc.
+- Paired programming
