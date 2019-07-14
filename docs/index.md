@@ -1,5 +1,140 @@
-# Testing
+# How I would Identify Good Software Engineering
 
-## Sub test
+[![Build Status](https://travis-ci.com/datamel/slides.svg?branch=master)](https://travis-ci.com/datamel/slides)
 
-Fun times!
+## Automated Tests
+
+Is the application covered by a comprehensive suite of tests that run automatically?
+
+![Testing Pyramid](pyramid.png)
+
+### Advantage of automated tests
+
+I can make changes to the application code with confidence that tests will quickly catch if I break the existing behaviour.
+
+I've been running unit tests locally and during a CI build for my Python.
+
+![VSCodeTests](vscodetestrunner.png)
+
+(Not typical testing) I have a CI build at travis-ci.com for these very slides that:
+
+- checks that my markdown is valid
+- checks there are no broken images
+- check there are no un-closed code blocks
+
+![alt text](markdowntestfail.png)
+
+## Test Driven Development
+
+Write the tests before **any** code.
+
+Red ---> Green ---> Refactor
+
+### 1. Failing test / red
+
+A snapshot in time failing at `test_no_name_given`.
+
+```python
+class TwoFerTest(unittest.TestCase):
+
+    def test_a_name_given(self):
+        self.assertEqual(two_fer("Alice"), "One for Alice, one for me.")
+
+    def test_another_name_given(self):
+        self.assertEqual(two_fer("Bob"), "One for Bob, one for me.")
+
+    def test_no_name_given(self):
+        self.assertEqual(two_fer(), 'One for you, one for me.')
+
+```
+
+### 2. Passing / green
+
+Added an `else` condition to satisfy new test.
+
+```python
+def two_fer(name=""):
+    if name == "Alice":
+        return ("One for Alice, one for me.")
+    elif name == "Bob":
+        return ("One for Bob, one for me.")
+    else name == "":
+        return('One for you, one for me.')
+```
+
+### 3. Refactored
+
+Now that test passed (and the [Rule of Three](https://en.wikipedia.org/wiki/Rule_of_three_(computer_programming)) applied), I refactored.
+
+```python
+def two_fer(name="you"): 
+    return (f"One for {name}, one for me.")
+```
+
+### Advantages of TDD
+
+- If tests are written before code then it follows that we should have less **bugs** going unnoticed.
+- Most productive programming I've done was exercism.io. As they supply all the tests so never any ambiguity about **requirements** of code.
+- Acts as code **documentation**.
+- And if you like numbers, an easy metric for code quality from **coverage %**.
+- TDD will naturally produce minimal modular code (Single Responsiblity Principle and **Y**ou **A**ren't **G**onna **T**o **N**eed **I**t)
+
+## Clean Code - SOLID
+
+5 important object-orientated design principles:
+
+- **Single-responsiblity principle**
+- **Open-closed principle**
+- Liskov substitution principle
+- Interface segregation principle
+- Dependency Inversion Principle
+
+I'm starting to appreciate the ones in bold.
+
+### Identifying the open-close principle in software
+
+Open for extension but closed for modification.
+
+Can I add features or switch a component out, without having to alter the original code (which might then have knock-on effects to other components)?
+
+## Continuous Integration
+
+> The practice of integrating changes from different developers in the team...several times a day.
+
+Is the code in a shared **source control** repository like *git*?
+
+Is a central server checking that it still **builds** and 
+les CI build from my code:
+
+![VSCodeTests](build_pass.png)
+
+My CI + deployment pipeline for these slides!
+
+```yaml
+language: python # Set the build language to Python
+
+python: 3.6 # Set the version of Python to use
+
+branches:
+  only:
+  - gh-pages
+  - /.*/ # Watch all branches pushed to github
+
+install:
+    - pip install mkdocs # Install the required dependencies
+    - gem install mdl # Install markdown linter (Ruby is already available on Travis-CI)
+
+script:
+    - mdl docs/ # Run markdown lint against docs/ folder
+
+before_deploy:
+    - mkdocs build --verbose --clean --strict # Build a local version of slides
+
+deploy: # Deploy built mkdocs files to Github on the gh_pages branch (from master)
+    provider: pages
+    skip_cleanup: true
+    github_token: $github_token
+    local_dir: site
+    on:
+        branch: master
+```
