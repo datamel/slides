@@ -5,19 +5,19 @@ python: 3.6 # Set the version of Python to use
 branches:
   only:
   - gh-pages
-  - /.*/
+  - /.*/ # Watch all branches pushed to github
 
 install:
     - pip install mkdocs # Install the required dependencies
-    - gem install mdl #markdownlint (Ruby is already available on Travis-CI)
+    - gem install mdl # Install markdown linter (Ruby is already available on Travis-CI)
 
 script:
-    - mdl docs/
+    - mdl docs/ # Run markdown lint against docs/ folder
 
 before_deploy:
-    - mkdocs build --verbose --clean --strict # Build a local version of the docs
+    - mkdocs build --verbose --clean --strict # Build a local version of slides
 
-deploy: # Deploy documentation to Github in the gh_pages branch
+deploy: # Deploy built mkdocs files to Github on the gh_pages branch (from master)
     provider: pages
     skip_cleanup: true
     github_token: $github_token
