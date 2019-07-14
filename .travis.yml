@@ -7,12 +7,19 @@ branches:
   - gh-pages
   - /.*/ # Watch all branches pushed to github
 
+# Pulling in mdcheckr
+before_install:
+  - sudo add-apt-repository -y ppa:mike42/mdcheckr
+  - sudo apt-get update
+  - sudo apt-get -y install mdcheckr
+
 install:
     - pip install mkdocs # Install the required dependencies
-    - gem install mdl # Install markdown linter (Ruby is already available on Travis-CI)
+    - # gem install mdl # Install markdown linter (Ruby is already available on Travis-CI)
 
 script:
-    - mdl docs/ # Run markdown lint against docs/ folder
+    - # mdl docs/ # Run markdown lint against docs/ folder
+    - mdcheckr docs/*.md # Check for broken images, link and code blocks
 
 before_deploy:
     - mkdocs build --verbose --clean --strict # Build a local version of slides
