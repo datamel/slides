@@ -132,7 +132,7 @@ def two_fer(name="you"):
 - And if you like numbers, an easy metric for code quality from **coverage %**.
 - TDD will naturally produce minimal modular code (Single Responsiblity Principle and **Y**ou **A**ren't **G**onna **T**o **N**eed **I**t)
 
-## **Thank** **You**
+## **Thank** **you**
 
 ### Things I didn't have time for
 
