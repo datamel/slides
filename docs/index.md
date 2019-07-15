@@ -8,12 +8,13 @@
 
 Is the code in a shared **source control** repository like *git*?
 
-Is a central server checking that it still **builds** and
-les CI build from my code:
+Is a central server (e.g. Travis CI) checking that it still **builds**?
 
 ![VSCodeTests](build_pass-resized.png)
 
 My CI + deployment pipeline for these slides!
+
+https://stackoverflow.com/questions/50892018/auto-build-an-mkdocs-documentation-in-travis-ci
 
 ```yaml
 language: python # Set the build language to Python
@@ -25,30 +26,33 @@ branches:
   - gh-pages
   - /.*/ # Watch all branches pushed to github
 
-# Pulling in mdcheckr
+# Install markdown checker
 before_install:
   - sudo add-apt-repository -y ppa:mike42/mdcheckr
   - sudo apt-get update
   - sudo apt-get -y install mdcheckr
 
 install:
-    - pip install mkdocs # Install the required dependencies
+    - pip install mkdocs # Install mkdocs
     - gem install mdl # Install markdown linter
 
 script:
-    - mdl docs/ # Run markdown linter against docs/ folder
-    - mdcheckr docs/*.md # Check for broken images, link and code blocks
+    - mdl docs/ ### Run markdown linter against docs/ folder
+    - mdcheckr docs/*.md #### Check for broken images, link and code blocks
 
 before_deploy:
-    - mkdocs build --verbose --clean --strict # Build a local version of slides
+    - mkdocs build --verbose --clean --strict ### Magic to create HTML from my markdown
 
-deploy: # Deploy built mkdocs files to Github on the gh_pages branch (from master)
+    ### END OF CI
+    ### START OF 'CONTINUOUS DEPLOYMENT' PHASE
+
+deploy: ###  Push generated web files to GitHub
     provider: pages
     skip_cleanup: true
     github_token: $github_token
     local_dir: site
     on:
-        branch: master
+        branch: master ### only publish slides from master
 ```
 
 ## Automated Tests
@@ -128,7 +132,9 @@ def two_fer(name="you"):
 - And if you like numbers, an easy metric for code quality from **coverage %**.
 - TDD will naturally produce minimal modular code (Single Responsiblity Principle and **Y**ou **A**ren't **G**onna **T**o **N**eed **I**t)
 
-## Things I wish I could fit in
+## **Thank** **You**
+
+### Things I didn't have time for
 
 - SOLID  object-orientated design principles
   - Single-responsiblity principle
