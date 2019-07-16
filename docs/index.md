@@ -146,7 +146,8 @@ def two_fer(name="you"):
   - Dependency Inversion Principle
 - Loosely coupled.
 - High cohesion.
-- Optimising code for performance and security. 
+- Optimising code for performance and security.
+- Algorithm complexity.
 - Easily readable code, following naming conventions etc. 
 - Design patterns e.g. singleton and repository.
 - Agile development, Kanban boards, SCRUM etc.
