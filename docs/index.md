@@ -43,16 +43,14 @@ script:
 before_deploy:
     - mkdocs build --verbose --clean --strict ### Magic to create HTML from my markdown
 
-    ### END OF CI
-    ### START OF 'CONTINUOUS DEPLOYMENT' PHASE
 
-deploy: ###  Push generated web files to GitHub
+deploy: # Push generated web files to GitHub
     provider: pages
     skip_cleanup: true
     github_token: $github_token
     local_dir: site
     on:
-        branch: master ### only publish slides from master
+        branch: master # only publish slides from master
 ```
 
 ## Automated Tests
