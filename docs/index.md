@@ -144,10 +144,11 @@ def two_fer(name="you"):
   - Liskov substitution principle
   - Interface segregation principle
   - Dependency Inversion Principle
-- Loosely coupled
-- High cohesion
-- Easily readable code, following naming conventions etc. 
-- Design patterns e.g. singleton and repository
-- Agile development, Kanban boards, SCRUM etc.
-- Paired programming
+- Loosely coupled.
+- High cohesion.
 - Optimising code for performance and security. 
+- Easily readable code, following naming conventions etc. 
+- Design patterns e.g. singleton and repository.
+- Agile development, Kanban boards, SCRUM etc.
+- Paired programming.
+
