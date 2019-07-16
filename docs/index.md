@@ -146,6 +146,8 @@ def two_fer(name="you"):
   - Dependency Inversion Principle
 - Loosely coupled
 - High cohesion
+- Easily readable code, following naming conventions etc. 
 - Design patterns e.g. singleton and repository
 - Agile development, Kanban boards, SCRUM etc.
 - Paired programming
+- Optimising code for performance and security. 
