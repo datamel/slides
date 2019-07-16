@@ -81,7 +81,7 @@ I've been running unit tests locally and during a CI build for my Python.
 
 ## Test Driven Development
 
-Write the tests before **any** code.
+Were tests written before **any** code?
 
 Red ---> Green ---> Refactor
 
