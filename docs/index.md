@@ -10,6 +10,10 @@ Is the code in a shared **source control** repository like *git*?
 
 Is a central server (e.g. Travis CI) checking that it still **builds**?
 
+Can failure be pointed back to a specific change?
+
+Testing at every commit for quick feedback.
+
 ![VSCodeTests](build_pass-resized.png)
 
 My CI + deployment pipeline for these slides!
