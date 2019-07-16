@@ -14,7 +14,7 @@ Is a central server (e.g. Travis CI) checking that it still **builds**?
 
 My CI + deployment pipeline for these slides!
 
-https://stackoverflow.com/questions/50892018/auto-build-an-mkdocs-documentation-in-travis-ci
+[Link to stackoverflow reference for below code](https://stackoverflow.com/questions/50892018/auto-build-an-mkdocs-documentation-in-travis-ci)
 
 ```yaml
 language: python # Set the build language to Python
